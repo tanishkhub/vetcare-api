@@ -6,7 +6,9 @@ const { router: authRouter, authMiddleware } = require('./routes/auth');
 const Medicine = require('./models/medicine');
 const patientRoutes = require('./routes/patient');
 const medicineRoutes = require('./routes/medicines');
-const medicineStockRoutes = require('./routes/medicineStock');
+const medicineStockRoutes = require('./routes/medicinestock');
+
+
 const vaccinesstocks = require('./routes/vaccineStock');
 const vaccines = require('./routes/vaccines');
 const notificationRoutes = require('./routes/notification');
