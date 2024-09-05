@@ -6,11 +6,10 @@ const { router: authRouter, authMiddleware } = require('./routes/auth');
 const Medicine = require('./models/medicine');
 const patientRoutes = require('./routes/patient');
 const medicineRoutes = require('./routes/medicines');
-const medicineStockRoutes = require('./routes/medicinestock');
+const medicineStockRoutes = require('./routes/medicineStock');
 const vaccinesstocks = require('./routes/vaccineStock');
 const vaccines = require('./routes/vaccines');
 const notificationRoutes = require('./routes/notification');
-
 
 const Patient = require('./models/patient'); 
 const Detail = require('./models/detail');
@@ -21,8 +20,9 @@ const detailsRouter = require('./routes/detail');
 const app = express();
 const port = 5000; // or your chosen port
 
+// Connect to MongoDB
+connectDB();
 
-app.use(cors());
 // Middleware
 app.use(cors());
 app.use(express.json()); // For parsing application/json
@@ -86,7 +86,7 @@ app.get('/', async (req, res) => {
         <div class="message">
           I think you are lost. Let me get you to the right path!
         </div>
-        <a href="https://vetcaree.vercel.app/" class="link">Go to VetCare</a>
+        <a href="https://www.vetcare.vercel.app" class="link">Go to VetCare</a>
       </body>
     </html>
   `);
@@ -100,8 +100,6 @@ app.use('/api/details', detailsRouter);
 app.use('/api', notificationRoutes);
 
 
-app.listen(port, async () => {
+app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
-  // Connect to MongoDB
-await connectDB();
-})
+});
