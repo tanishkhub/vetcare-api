@@ -1,0 +1,70 @@
+# Environment variables
+.env
+
+# Node modules
+node_modules/
+
+# Build output
+build/
+dist/
+*.log
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# IDE and editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Coverage directory used by tools like Istanbul
+coverage/
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Miscellaneous
+*.swp
+*.swo
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv environment variable files
+.env
+.env.*.local
+
+# Next.js build output
+.next/
+
+# Nuxt.js build / generated
+.nuxt/
+
+# Serverless directories
+.serverless/
+
+# AWS SAM build directories
+.aws-sam/
+
+# Mac system files
+*.DS_Store
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
