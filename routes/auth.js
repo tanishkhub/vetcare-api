@@ -89,78 +89,32 @@ router.get('/scheduler', async (req, res) => {
       expiryDate: { $gte: today, $lte: nextWeek }
     });
 
-    // Initialize message as HTML for better formatting
-    let message = `
-      <h2 style="color: #ff6347; text-align: center;">Expiring Stocks Alert</h2>
-      <p>The following stocks are expiring within the next 60 days:</p>
-      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-        <thead>
-          <tr style="background-color: #f2f2f2;">
-            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Stock Type</th>
-            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
-            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Brand</th>
-            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Expiry Date</th>
-            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Days Left</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
+    let message = 'The following stocks are expiring soon:\n\n';
 
-    // Function to calculate days left until expiry
-    const calculateDaysLeft = (expiryDate) => {
-      const diffTime = expiryDate - today; // Difference in milliseconds
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
-      return diffDays;
-    };
-
-    // Add vaccine details to the message if any exist
+    // Add vaccine details to the message
     if (expiringVaccines.length > 0) {
+      message += 'Vaccine Stocks:\n\n';
       expiringVaccines.forEach(stock => {
-        const daysLeft = calculateDaysLeft(stock.expiryDate);
-        message += `
-          <tr>
-            <td style="border: 1px solid #ddd; padding: 8px;">Vaccine</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${stock.vaccineName}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${stock.brandName}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${stock.expiryDate.toDateString()}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${daysLeft} days</td>
-          </tr>
-        `;
+        message += `Vaccine Name: ${stock.vaccineName}\nBrand: ${stock.brandName}\nExpiry Date: ${stock.expiryDate.toDateString()}\n\n`;
       });
     } else {
-      message += `<tr><td colspan="5" style="padding: 8px;">No vaccines expiring soon.</td></tr>`;
+      message += 'No vaccines expiring soon.\n\n';
     }
 
-    // Add medicine details to the message if any exist
+    // Add medicine details to the message
     if (expiringMedicines.length > 0) {
+      message += 'Medicine Stocks:\n\n';
       expiringMedicines.forEach(stock => {
-        const daysLeft = calculateDaysLeft(stock.expiryDate);
-        message += `
-          <tr>
-            <td style="border: 1px solid #ddd; padding: 8px;">Medicine</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${stock.medicineName}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${stock.brandName}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${stock.expiryDate.toDateString()}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${daysLeft} days</td>
-          </tr>
-        `;
+        message += `Medicine Name: ${stock.medicineName}\nBrand: ${stock.brandName}\nExpiry Date: ${stock.expiryDate.toDateString()}\n\n`;
       });
     } else {
-      message += `<tr><td colspan="5" style="padding: 8px;">No medicines expiring soon.</td></tr>`;
+      message += 'No medicines expiring soon.\n\n';
     }
-
-    // Close the table and add a footer to the message
-    message += `
-        </tbody>
-      </table>
-      <p>Please take the necessary action to avoid wastage of these stocks.</p>
-      <p>Regards,<br/>The VetCare Team</p>
-    `;
 
     // Send notification
-    await sendExpiryNotification(message); // Assumes sendExpiryNotification supports HTML
+    await sendExpiryNotification(message);
 
-    res.send('Expiry notification sent successfully.');
+    res.send('Mail sent');
   } catch (error) {
     console.error('Error checking expiry dates:', error);
     res.status(500).send('Internal Server Error');
