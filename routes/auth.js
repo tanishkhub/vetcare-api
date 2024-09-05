@@ -89,37 +89,73 @@ router.get('/scheduler', async (req, res) => {
       expiryDate: { $gte: today, $lte: nextWeek }
     });
 
-    let message = 'The following stocks are expiring soon:\n\n';
+    // Initialize message as HTML for better formatting
+    let message = `
+      <h2 style="color: #ff6347; text-align: center;">Expiring Stocks Alert</h2>
+      <p>The following stocks are expiring within the next 60 days:</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+          <tr style="background-color: #f2f2f2;">
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Stock Type</th>
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Brand</th>
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Expiry Date</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
 
-    // Add vaccine details to the message
+    // Add vaccine details to the message if any exist
     if (expiringVaccines.length > 0) {
-      message += 'Vaccine Stocks:\n\n';
       expiringVaccines.forEach(stock => {
-        message += `Vaccine Name: ${stock.vaccineName}\nBrand: ${stock.brandName}\nExpiry Date: ${stock.expiryDate.toDateString()}\n\n`;
+        message += `
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">Vaccine</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${stock.vaccineName}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${stock.brandName}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${stock.expiryDate.toDateString()}</td>
+          </tr>
+        `;
       });
     } else {
-      message += 'No vaccines expiring soon.\n\n';
+      message += `<tr><td colspan="4" style="padding: 8px;">No vaccines expiring soon.</td></tr>`;
     }
 
-    // Add medicine details to the message
+    // Add medicine details to the message if any exist
     if (expiringMedicines.length > 0) {
-      message += 'Medicine Stocks:\n\n';
       expiringMedicines.forEach(stock => {
-        message += `Medicine Name: ${stock.medicineName}\nBrand: ${stock.brandName}\nExpiry Date: ${stock.expiryDate.toDateString()}\n\n`;
+        message += `
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">Medicine</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${stock.medicineName}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${stock.brandName}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${stock.expiryDate.toDateString()}</td>
+          </tr>
+        `;
       });
     } else {
-      message += 'No medicines expiring soon.\n\n';
+      message += `<tr><td colspan="4" style="padding: 8px;">No medicines expiring soon.</td></tr>`;
     }
+
+    // Close the table and add a footer to the message
+    message += `
+        </tbody>
+      </table>
+      <p>Please take the necessary action to avoid wastage of these stocks.</p>
+      <p>Regards,<br/>The VetCare Team</p>
+    `;
 
     // Send notification
-    await sendExpiryNotification(message);
+    await sendExpiryNotification(message); // Assumes sendExpiryNotification supports HTML
 
-    res.send('Mail sent');
+    res.send('Expiry notification sent successfully.');
   } catch (error) {
     console.error('Error checking expiry dates:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
+module.exports = router;
 
 module.exports = { router, authMiddleware };
 
