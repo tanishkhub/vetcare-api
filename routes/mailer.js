@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const crypto = require('crypto'); // for generating a unique identifier
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -16,6 +17,7 @@ const sendExpiryNotification = async (message) => {
     from: 'alert.vetcare@gmail.com', 
     to: 'tanishk0297@gmail.com, yooajay@gmail.com',
     subject: 'Vaccine Expiry Alert',
+    messageId: `<${crypto.randomBytes(16).toString('hex')}@alert.vetcare.com>`, // unique Message-ID
     html: `
       <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
         <div style="background-color: #f5f5f5; padding: 20px; text-align: center;">
