@@ -13,10 +13,11 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendExpiryNotification = async (message) => {
+  const timestamp = new Date().toISOString(); // to create a unique identifier based on the current time
   const mailOptions = {
     from: 'alert.vetcare@gmail.com', 
     to: 'tanishk0297@gmail.com, yooajay@gmail.com',
-    subject: 'Vaccine Expiry Alert',
+    subject: `Vaccine Expiry Alert - ${timestamp}`, // unique subject by adding timestamp
     messageId: `<${crypto.randomBytes(16).toString('hex')}@alert.vetcare.com>`, // unique Message-ID
     html: `
       <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
