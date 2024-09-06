@@ -33,7 +33,7 @@ const sendExpiryNotification = async (message) => {
             ${message}
           </p>
           <div style="text-align: center; margin: 20px 0;">
-            <a href="https://your-link.com" style="background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; font-size: 16px; border-radius: 5px;">Check Expiring Vaccines</a>
+            <a href="https://vetcaree.vercel.app" style="background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; font-size: 16px; border-radius: 5px;">Check Expiring Vaccines</a>
           </div>
           <p style="font-size: 16px; line-height: 1.6; text-align: justify;">
             Please take necessary action to avoid the shortage/wastage of vaccines.
