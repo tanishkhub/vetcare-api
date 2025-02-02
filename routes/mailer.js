@@ -22,7 +22,7 @@ const sendExpiryNotification = async (message) => {
     html: `
       <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
         <div style="background-color: #f5f5f5; padding: 20px; text-align: center;">
-          <img src="https://i.ibb.co/Km4376c/Dark-Abstract-Graphic-Designer-Email-Header.png?text=Vaccine+Expiry+Alert" alt="Vaccine Expiry Alert" style="max-width: 100%; height: auto;">
+          <img src="https://www.canva.com/design/DAGP7lu-yFs/7TLLOnauoVrTV7Sr1f7C7w/view?utm_content=DAGP7lu-yFs&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h5d988cece1" alt="Vaccine Expiry Alert" style="max-width: 100%; height: auto;">
         </div>
         <div style="padding: 20px; background-color: #fff;">
           <h1 style="color: #ff6347; text-align: center;">Vaccine Expiry Alert</h1>
